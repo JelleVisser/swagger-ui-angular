@@ -1,10 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ElementRef } from '@angular/core';
+import SwaggerUI from 'swagger-ui';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   title = 'ng-swagger';
+
+  constructor(private el: ElementRef) {
+  }
+
+  ngAfterViewInit() {
+    const ui = SwaggerUI({
+      url: 'http://petstore.swagger.io/v2/swagger.json',
+      domNode: this.el.nativeElement.querySelector('.swagger-container'),
+      deepLinking: true,
+      presets: [
+        SwaggerUI.presets.apis
+      ],
+    });
+  }
 }
